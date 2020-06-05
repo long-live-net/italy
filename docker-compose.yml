@@ -1,0 +1,43 @@
+version: '3.3'
+services:
+  hamapp:
+    build: ./hamapp
+    volumes:
+      - ./volume/hamapp/log:/var/log/hamcco
+    env_file:
+      - ./userlocal.env
+  upapp:
+    build: ./upapp
+    volumes:
+      - ./volume/upapp/data:/usr/src/app/data
+    env_file:
+      - ./uploader.env
+  glapp:
+    build: ./glapp
+    volumes:
+      - sockets:/usr/src/app/tmp/sockets
+      - ./volume/glapp/database:/usr/src/app/database
+      - ./volume/glapp/log:/usr/src/app/log
+      - ./volume/glapp/uploads:/usr/src/app/public/uploads
+  llapp:
+    build: ./llapp
+    volumes:
+      - sockets:/var/tmp/sockets
+      - ./volume/llapp/db:/code/sitebase/db
+      - ./volume/llapp/media:/code/sitebase/media
+      - ./volume/llapp/log:/var/log/uwsgi
+      - ./volume/llapp/llwork:/llwork
+  fraweb:
+    build: ./fraweb
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - hamapp:hamapp
+      - upapp:upapp
+    volumes:
+      - sockets:/var/tmp/sockets
+      - ./volume/fraweb/log:/var/log/nginx
+      - /etc/letsencrypt:/etc/letsencrypt
+volumes:
+  sockets:

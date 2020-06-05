@@ -1,17 +1,5 @@
 version: '3.3'
 services:
-  hamapp:
-    build: ./hamapp
-    volumes:
-      - ./volume/hamapp/log:/var/log/hamcco
-    env_file:
-      - ./userlocal.env
-  upapp:
-    build: ./upapp
-    volumes:
-      - ./volume/upapp/data:/usr/src/app/data
-    env_file:
-      - ./uploader.env
   glapp:
     build: ./glapp
     volumes:

@@ -16,6 +16,5 @@ services:
     volumes:
       - sockets:/var/tmp/sockets
       - ./volume/fraweb/log:/var/log/nginx
-      - /etc/letsencrypt:/etc/letsencrypt
 volumes:
   sockets:

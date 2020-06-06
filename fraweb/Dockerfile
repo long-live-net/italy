@@ -1,5 +1,5 @@
 FROM nginx
-MAINTAINER ngzm<nagazumi@longlivenet.com>
+LABEL maintainer="ngzm<nagazumi@longlivenet.com>"
 #
 # Base
 RUN cd /etc/nginx/conf.d && cp -p default.conf default.conf.org

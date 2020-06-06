@@ -1,18 +1,7 @@
 version: '3.3'
 services:
-  glapp:
-    build: ./glapp
-    ports:
-      - "3000:3000"
-    volumes:
-      - sockets:/usr/src/app/tmp/sockets
-      - ./volume/glapp/database:/usr/src/app/database
-      - ./volume/glapp/log:/usr/src/app/log
-      - ./volume/glapp/uploads:/usr/src/app/public/uploads
   llapp:
-    build: ./llapp
-    ports:
-      - "8008:8008"
+    image: llapp
     volumes:
       - sockets:/var/tmp/sockets
       - ./volume/llapp/db:/code/sitebase/db

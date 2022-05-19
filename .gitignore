@@ -4,3 +4,6 @@
 /volume
 /tmp
 /log
+
+.env*
+create-iine-user.sh

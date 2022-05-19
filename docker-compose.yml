@@ -8,8 +8,6 @@ services:
       - '4000:4000'
 
   backend:
-    depends_on:
-      - 'mongo'
     image: iine_backend
     environment:
       NODE_ENV: ${NODE_ENV}

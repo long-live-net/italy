@@ -1,13 +1,45 @@
-version: '3.3'
+version: '3.8'
 services:
-  llapp:
-    image: llapp
+  frontend:
+    image: iine_frontend
+    tty: true
+    stdin_open: true
+    ports:
+      - '4000:4000'
+
+  backend:
+    depends_on:
+      - 'mongo'
+    image: iine_backend
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      IINE_DATABASE: ${MONGO_INITDB_DATABASE}
+      IINE_DB_UERNAME: ${MONGO_IINE_UERNAME}
+      IINE_DB_PASSWORD: ${MONGO_IINE_PASSWORD}
+      BUCKET_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      BUCKET_SECRET_KEY: ${MINIO_SECRET_KEY}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+    tty: true
+    stdin_open: true
+    ports:
+      - '3003:3003'
     volumes:
-      - sockets:/var/tmp/sockets
-      - ./volume/llapp/db:/code/sitebase/db
-      - ./volume/llapp/media:/code/sitebase/media
-      - ./volume/llapp/log:/var/log/uwsgi
-      - ./volume/llapp/llwork:/llwork
+      - ./volume/iine-backend/logs:/logs
+  
+  mongo:
+    image: 'mongo:5.0'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+      MONGO_IINE_UERNAME: ${MONGO_IINE_UERNAME}
+      MONGO_IINE_PASSWORD: ${MONGO_IINE_PASSWORD}
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./volume/mongo/db:/data/db
+      - ./volume/mongo/configdb:/data/configdb
+
   fraweb:
     build: ./fraweb
     ports:

@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+  llapp:
+    image: llapp
+    volumes:
+      - sockets:/var/tmp/sockets
+      - ./volume/llapp/db:/code/sitebase/db
+      - ./volume/llapp/media:/code/sitebase/media
+      - ./volume/llapp/log:/var/log/uwsgi
+      - ./volume/llapp/llwork:/llwork
+  fraweb:
+    build: ./fraweb
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - sockets:/var/tmp/sockets
+      - ./volume/fraweb/log:/var/log/nginx
+volumes:
+  sockets:

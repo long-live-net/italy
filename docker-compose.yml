@@ -2,8 +2,6 @@ version: '3.8'
 services:
   frontend:
     image: iine_frontend
-    tty: true
-    stdin_open: true
     ports:
       - '4000:4000'
 
@@ -17,8 +15,6 @@ services:
       BUCKET_ACCESS_KEY: ${MINIO_ACCESS_KEY}
       BUCKET_SECRET_KEY: ${MINIO_SECRET_KEY}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
-    tty: true
-    stdin_open: true
     ports:
       - '3003:3003'
     volumes:
